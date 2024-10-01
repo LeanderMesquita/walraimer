@@ -1,5 +1,6 @@
 package com.llm.walraimer.core.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -29,6 +30,7 @@ public class User implements Serializable {
     private String password;
 
     @OneToMany(mappedBy = "client")
+    @JsonIgnore
     private List<Order> orders = new ArrayList<>();
 
     @CreatedDate
