@@ -8,6 +8,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @NoArgsConstructor
@@ -26,8 +28,11 @@ public class User implements Serializable {
     private String phone;
     private String password;
 
+    @OneToMany(mappedBy = "client")
+    private List<Order> orders = new ArrayList<>();
+
     @CreatedDate
-    @Column(nullable = true, updatable = false)
+    @Column(nullable = false, updatable = false)
     private Instant createdAt;
     @LastModifiedDate
     @Column(nullable = false)
