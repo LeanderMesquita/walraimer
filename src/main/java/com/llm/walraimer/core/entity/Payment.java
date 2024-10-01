@@ -16,11 +16,6 @@ import java.time.Instant;
 @EqualsAndHashCode
 public class Payment {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "payment_sequence")
-    @SequenceGenerator(name = "payment_sequence", sequenceName = "payment_seq")
-    private Long id;
-
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private Instant moment;
@@ -31,8 +26,7 @@ public class Payment {
     @Setter
     private Order order;
 
-    public Payment(Long id, Order order) {
-        this.id = id;
+    public Payment(Order order) {
         this.order = order;
     }
 }
