@@ -9,6 +9,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 @EntityListeners(AuditingEntityListener.class)
 @Entity
@@ -25,14 +27,21 @@ public class Order {
 
     @CreatedDate
     @Column(updatable = false, nullable = false)
-    @Setter
     private Instant moment;
 
     private Integer orderStatus;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
+    @Setter
     private User client;
+
+    @OneToMany(mappedBy = "id.order")
+    private final Set<OrderItem> items = new HashSet<>();
+
+    @Setter
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    private Payment payment;
 
     public Order(Long id, OrderStatus orderStatus, User client) {
         this.id = id;
@@ -44,5 +53,13 @@ public class Order {
         if (orderStatus != null) {
             this.orderStatus = orderStatus.getCode();
         }
+    }
+
+    public Double getTotal() {
+        double sum = 0.0;
+        for (OrderItem x : items) {
+            sum += x.getSubTotal();
+        }
+        return sum;
     }
 }

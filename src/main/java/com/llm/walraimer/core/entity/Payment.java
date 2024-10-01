@@ -1,0 +1,2 @@
+package com.llm.walraimer.core.entity;public class Payment {
+}
