@@ -55,6 +55,10 @@ public class Order {
         }
     }
 
+    public OrderStatus getOrderStatus() {
+        return OrderStatus.valueOf(orderStatus);
+    }
+
     public Double getTotal() {
         double sum = 0.0;
         for (OrderItem x : items) {
